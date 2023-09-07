@@ -2,49 +2,29 @@
 #include "main.h"
 
 /**
- * *_realloc - reallocates a memory block using malloc and free
- * @ptr: pointer to the memory previsouly allocated by malloc
- * @old_size: size of the allocated memory for ptr
- * @new_size: new size of the new memory block
+ * *array_range - creates an array of integers
+ * @min: minimum range of values stored
+ * @max: maximum range of values stored and number of elements
  *
- * Return: pointer to the newly allocated memory block
+ * Return: pointer to the new array
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+int *array_range(int min, int max)
 {
-	char *ptr1;
-	char *old_ptr;
-	unsigned int i;
+	int *ptr;
+	int i, size;
 
-	if (new_size == old_size)
-		return (ptr);
-
-	if (new_size == 0 && ptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-
-	if (!ptr)
-		return (malloc(new_size));
-
-	ptr1 = malloc(new_size);
-	if (!ptr1)
+	if (min > max)
 		return (NULL);
 
-	old_ptr = ptr;
+	size = max - min + 1;
 
-	if (new_size < old_size)
-	{
-		for (i = 0; i < new_size; i++)
-			ptr1[i] = old_ptr[i];
-	}
+	ptr = malloc(sizeof(int) * size);
 
-	if (new_size > old_size)
-	{
-		for (i = 0; i < old_size; i++)
-			ptr1[i] = old_ptr[i];
-	}
+	if (ptr == NULL)
+		return (NULL);
 
-	free(ptr);
-	return (ptr1);
+	for (i = 0; min <= max; i++)
+		ptr[i] = min++;
+
+	return (ptr);
 }
